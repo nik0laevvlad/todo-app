@@ -1,16 +1,20 @@
-import React from 'react';
-import { Button } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useEffect, useState } from 'react';
+import { AddToDo } from "./components/AddToDo";
+import { TodoItem } from "./interface";
+import { Container } from "react-bootstrap";
 
 function App() {
+  const [todos, setTodos] = useState<Array<TodoItem>>([])
+
+  const addTodo = (props: string) => {
+    setTodos([...todos, {text: props, completed: false}]);
+  };
+
   return (
-    <div className="d-grid gap-2">
-      <Button variant="primary" size="lg">
-        Block level button
-      </Button>
-      <Button variant="success" size="lg">
-        Block level button
-      </Button>
+    <div>
+      <Container>
+        <AddToDo createItem={addTodo} />
+      </Container>
     </div>
   );
 }

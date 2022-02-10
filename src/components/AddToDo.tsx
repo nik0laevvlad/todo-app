@@ -1,8 +1,8 @@
 import { AddTodo } from "../interface";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { Button, Col, Form, FormControl, Row } from "react-bootstrap";
 
-export function AddToDo(props: AddTodo) {
+export const AddToDo: React.FC<AddTodo> = ({ createItem }) => {
   const [value, setValue] = useState('');
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -11,15 +11,21 @@ export function AddToDo(props: AddTodo) {
 
   const onSubmit = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    props.createItem(value);
+    createItem(value);
     setValue('');
   };
 
   return(
     <div>
-      <Form>
-        <input type="text" value={value} onChange={onChange} />
-        <Button type="submit" onSubmit={onSubmit}>Submit</Button>
+      <Form className="mt-5">
+        <Row className="justify-content-md-center">
+          <Col md="auto">
+            <FormControl placeholder="ToDo" value={value} onChange={onChange} />
+          </Col>
+          <Col md="auto">
+            <Button type="submit" onSubmit={onSubmit}>Submit</Button>
+          </Col>
+        </Row>
       </Form>
     </div>
   )
