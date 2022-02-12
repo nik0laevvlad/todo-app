@@ -1,19 +1,42 @@
-import React, { useEffect, useState } from 'react';
-import { AddToDo } from "./components/AddToDo";
+import React, { ChangeEvent, useState } from 'react';
+import { Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
 import { TodoItem } from "./interface";
-import { Container } from "react-bootstrap";
+import { ListItem } from "./components/ListItem";
 
 function App() {
-  const [todos, setTodos] = useState<Array<TodoItem>>([])
+  const [item, setItem] = useState('');
+  const [list, setList] = useState<TodoItem[]>([]);
 
-  const addTodo = (props: string) => {
-    setTodos([...todos, {text: props, completed: false}]);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if(e.target.name === "input"){
+      setItem(e.target.value);
+    }
   };
+
+  const addTodo = () => {
+    const newItem = { text: item, completed: false }
+    setList([...list, newItem]);
+    setItem("");
+  }
 
   return (
     <div>
       <Container>
-        <AddToDo createItem={addTodo} />
+        <Form className="mt-5">
+          <Row className="justify-content-md-center">
+            <Col md="auto">
+              <FormControl name="input" placeholder="ToDo" value={item} onChange={handleChange}/>
+            </Col>
+            <Col md="auto">
+              <Button onClick={addTodo}>Submit</Button>
+            </Col>
+          </Row>
+          <div className="mt-3 h2 text-center">
+            {list.map((item: TodoItem, key: number) => {
+              return <ListItem key={key} item={item} />
+            })}
+          </div>
+        </Form>
       </Container>
     </div>
   );
