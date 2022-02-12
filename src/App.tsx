@@ -8,16 +8,29 @@ function App() {
   const [list, setList] = useState<TodoItem[]>([]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if(e.target.name === "input"){
+    if (e.target.name === "input") {
       setItem(e.target.value);
     }
   };
 
   const addTodo = () => {
-    const newItem = { text: item, completed: false }
+    const newItem = {text: item, completed: false}
     setList([...list, newItem]);
     setItem("");
-  }
+  };
+
+  const completeTask = (selectedTodo: TodoItem) => {
+    const newItems = list.map((todo) => {
+      if (todo === selectedTodo) {
+        return {
+          ...todo,
+          completed: !todo.completed,
+        };
+      }
+      return todo;
+    })
+    setList(newItems);
+  };
 
   return (
     <div>
@@ -31,12 +44,12 @@ function App() {
               <Button onClick={addTodo}>Submit</Button>
             </Col>
           </Row>
-          <div className="mt-3 h2 text-center">
-            {list.map((item: TodoItem, key: number) => {
-              return <ListItem key={key} item={item} />
-            })}
-          </div>
         </Form>
+        <div className="mt-3 h2">
+          {list.map((item: TodoItem, key: number) => {
+            return <ListItem key={key} item={item} completeTask={completeTask}/>
+          })}
+        </div>
       </Container>
     </div>
   );
