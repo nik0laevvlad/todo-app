@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from 'react';
-import { Button, Col, Container, Form, FormControl, Row } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { TodoItem } from "./interface";
-import { ListItem } from "./components/ListItem";
+import { TodoList, AddItemForm } from "./components";
 
 function App() {
   const [item, setItem] = useState('');
@@ -35,21 +35,8 @@ function App() {
   return (
     <div>
       <Container>
-        <Form className="mt-5">
-          <Row className="justify-content-md-center">
-            <Col md="auto">
-              <FormControl name="input" placeholder="ToDo" value={item} onChange={handleChange}/>
-            </Col>
-            <Col md="auto">
-              <Button onClick={addTodo}>Submit</Button>
-            </Col>
-          </Row>
-        </Form>
-        <div className="mt-3 h2">
-          {list.map((item: TodoItem, key: number) => {
-            return <ListItem key={key} item={item} completeTask={completeTask}/>
-          })}
-        </div>
+        <AddItemForm item={item} handleChange={handleChange} addTodo={addTodo}/>
+        <TodoList list={list} completeTask={completeTask}/>
       </Container>
     </div>
   );
