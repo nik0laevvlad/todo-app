@@ -17,7 +17,13 @@ export const AddItemForm = ({item, handleChange, addTodo}: AddItem) => {
   return (
     <Row className="mt-5 justify-content-md-center">
       <Col md="auto">
-        <FormControl onKeyPress={pressEnter} name="input" placeholder="ToDo" value={item} onChange={handleChange}/>
+        <FormControl
+          onKeyPress={pressEnter}
+          name="input"
+          placeholder="To Do..."
+          value={item}
+          onChange={handleChange}
+        />
       </Col>
       <Col md="auto">
         <Button onClick={addTodo}>Submit</Button>

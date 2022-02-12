@@ -14,9 +14,11 @@ function App() {
   };
 
   const addTodo = () => {
-    const newItem = {text: item, completed: false}
-    setList([...list, newItem]);
-    setItem("");
+    const newItem = {text: item, completed: false};
+    if (newItem.text !== "") {
+      setList([...list, newItem]);
+      setItem("");
+    }
   };
 
   const completeTask = (selectedTodo: TodoItem) => {
