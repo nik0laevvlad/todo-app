@@ -1,4 +1,4 @@
-import { TodoItem } from "../interface";
+import { TodoItem } from "../types";
 import { FormCheck } from "react-bootstrap";
 import FormCheckInput from "react-bootstrap/FormCheckInput";
 import FormCheckLabel from "react-bootstrap/FormCheckLabel";

@@ -1,5 +1,5 @@
-import { Button, Col, FormControl, Row } from "react-bootstrap";
-import React, { ChangeEvent } from "react";
+import { Button, Col, FormControl, Row } from 'react-bootstrap';
+import React, { ChangeEvent } from 'react';
 
 interface AddItem {
   item: string;
@@ -7,12 +7,12 @@ interface AddItem {
   addTodo: () => void;
 }
 
-export const AddItemForm = ({item, handleChange, addTodo}: AddItem) => {
+export const AddItemForm = ({ item, handleChange, addTodo }: AddItem) => {
   const pressEnter = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       addTodo();
     }
-  }
+  };
 
   return (
     <Row className="mt-5 justify-content-md-center">
@@ -29,5 +29,5 @@ export const AddItemForm = ({item, handleChange, addTodo}: AddItem) => {
         <Button onClick={addTodo}>Submit</Button>
       </Col>
     </Row>
-  )
-}
+  );
+};
