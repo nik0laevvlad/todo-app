@@ -22,16 +22,8 @@ function App() {
   };
 
   const completeTask = (selectedTodo: TodoItem) => {
-    const newItems = list.map((todo) => {
-      if (todo === selectedTodo) {
-        return {
-          ...todo,
-          completed: !todo.completed,
-        };
-      }
-      return todo;
-    });
-    setList(newItems);
+    selectedTodo.completed = !selectedTodo.completed;
+    setList([...list]);
   };
 
   return (
