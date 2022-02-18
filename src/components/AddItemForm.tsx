@@ -1,31 +1,38 @@
 import { Button, Col, Form, FormControl, Row } from 'react-bootstrap';
-import React, { ChangeEvent } from 'react';
+import React, { useState } from 'react';
 
 interface Props {
-  item: string;
-  handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  addTodo: () => void;
+  addTodo: (item: string) => void;
 }
 
-export const AddItemForm = ({ item, handleChange, addTodo }: Props) => {
+export const AddItemForm = ({ addTodo }: Props) => {
+  const [text, setText] = useState('');
+
   return (
     <Form
       onSubmit={(e) => {
         e.preventDefault();
-        addTodo();
+        addTodo(text);
+        setText('');
       }}
     >
       <Row className="mt-5 justify-content-md-center">
         <Col md="auto">
           <FormControl
-            name="input"
             placeholder="To Do..."
-            value={item}
-            onChange={handleChange}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
           />
         </Col>
         <Col md="auto">
-          <Button onClick={addTodo}>Submit</Button>
+          <Button
+            onClick={() => {
+              addTodo(text);
+              setText('');
+            }}
+          >
+            Submit
+          </Button>
         </Col>
       </Row>
     </Form>
