@@ -7,8 +7,8 @@ function App() {
   const [list, setList] = useState<TodoItem[]>([]);
 
   useEffect(() => {
-    localStorage.setItem("list", JSON.stringify(list));
-  }, [list])
+    localStorage.setItem('list', JSON.stringify(list));
+  }, [list]);
 
   const addTodo = (item: string) => {
     const newItem = { text: item, completed: false };
@@ -26,7 +26,7 @@ function App() {
     <div>
       <Container>
         <AddItemForm addTodo={(item) => addTodo(item)} />
-        <TodoList list={list} completeTask={completeTask} />
+        <TodoList completeTask={completeTask} list={list} />
       </Container>
     </div>
   );
