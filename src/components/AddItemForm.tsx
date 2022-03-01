@@ -16,7 +16,7 @@ export const AddItemForm = ({ addTodo }: Props) => {
         setText('');
       }}
     >
-      <Row className="mt-5 justify-content-md-center">
+      <Row className="mt-5">
         <Col md="auto">
           <FormControl
             placeholder="To Do..."
