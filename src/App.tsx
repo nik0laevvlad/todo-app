@@ -10,20 +10,22 @@ function App() {
     const newItem = { text: item, completed: false };
     if (newItem.text.trim() !== '') {
       setList([...list, newItem]);
-      localStorage.setItem('todoList', JSON.stringify([...list, newItem]));
     }
   };
 
   const completeTask = (selectedTodo: TodoItem) => {
     selectedTodo.completed = !selectedTodo.completed;
     setList([...list]);
-    localStorage.setItem('todoList', JSON.stringify([...list]));
   };
 
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('todoList') || '[]');
     setList(storage);
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('todoList', JSON.stringify(list));
+  }, [list]);
 
   return (
     <>
