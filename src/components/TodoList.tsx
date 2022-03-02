@@ -7,12 +7,14 @@ interface Props {
   completeTask: (selectedTodo: TodoItem) => void;
 }
 
-export const TodoList = ({ list, completeTask }: Props) => {
+export const TodoList = ({ completeTask, list }: Props) => {
   return (
-    <div className="mt-3 h2">
-      {list.map((item: TodoItem, key: number) => {
-        return <ListItem key={key} item={item} completeTask={completeTask} />;
-      })}
+    <div>
+      <div className="mt-3 h2">
+        {list.map((item: TodoItem, key: number) => {
+          return <ListItem key={key} item={item} completeTask={completeTask} />;
+        })}
+      </div>
     </div>
   );
 };

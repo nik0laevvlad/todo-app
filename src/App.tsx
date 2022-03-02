@@ -1,23 +1,15 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { TodoItem } from './types';
 import { AddItemForm, TodoList } from './components';
 
 function App() {
-  const [item, setItem] = useState('');
   const [list, setList] = useState<TodoItem[]>([]);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.name === 'input') {
-      setItem(e.target.value);
-    }
-  };
-
-  const addTodo = () => {
+  const addTodo = (item: string) => {
     const newItem = { text: item, completed: false };
-    if (newItem.text !== '') {
+    if (newItem.text.trim() !== '') {
       setList([...list, newItem]);
-      setItem('');
     }
   };
 
@@ -26,17 +18,22 @@ function App() {
     setList([...list]);
   };
 
+  useEffect(() => {
+    const storage = JSON.parse(localStorage.getItem('todoList') || '[]');
+    setList(storage);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('todoList', JSON.stringify(list));
+  }, [list]);
+
   return (
-    <div>
+    <>
       <Container>
-        <AddItemForm
-          item={item}
-          handleChange={handleChange}
-          addTodo={addTodo}
-        />
-        <TodoList list={list} completeTask={completeTask} />
+        <AddItemForm addTodo={(item) => addTodo(item)} />
+        <TodoList completeTask={completeTask} list={list} />
       </Container>
-    </div>
+    </>
   );
 }
 
