@@ -18,6 +18,12 @@ function App() {
     setList([...list]);
   };
 
+  const deleteTask = (index: number) => {
+    const items = JSON.parse(localStorage.getItem('todoList') || '[]');
+    items.splice(index, 1);
+    setList(items);
+  };
+
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('todoList') || '[]');
     setList(storage);
@@ -31,7 +37,11 @@ function App() {
     <>
       <Container>
         <AddItemForm addTodo={(item) => addTodo(item)} />
-        <TodoList completeTask={completeTask} list={list} />
+        <TodoList
+          completeTask={completeTask}
+          list={list}
+          deleteTask={deleteTask}
+        />
       </Container>
     </>
   );
