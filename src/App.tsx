@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { TodoItem } from './types';
-import { AddItemForm, TodoList } from './components';
+import { AddItemForm, TodoList } from './modules';
 
 function App() {
   const [list, setList] = useState<TodoItem[]>([]);
