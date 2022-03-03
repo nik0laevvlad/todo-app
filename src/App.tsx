@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { TodoItem } from './types';
-import { AddItemForm, TodoList } from './components';
+import { AddItemForm, TodoList } from './modules';
 
 function App() {
   const [list, setList] = useState<TodoItem[]>([]);
@@ -18,6 +18,11 @@ function App() {
     setList([...list]);
   };
 
+  const deleteTask = (index: number) => {
+    list.splice(index, 1);
+    setList([...list]);
+  };
+
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('todoList') || '[]');
     setList(storage);
@@ -31,7 +36,11 @@ function App() {
     <>
       <Container>
         <AddItemForm addTodo={(item) => addTodo(item)} />
-        <TodoList completeTask={completeTask} list={list} />
+        <TodoList
+          completeTask={completeTask}
+          list={list}
+          deleteTask={deleteTask}
+        />
       </Container>
     </>
   );
