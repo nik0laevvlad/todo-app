@@ -19,9 +19,8 @@ function App() {
   };
 
   const deleteTask = (index: number) => {
-    const items = JSON.parse(localStorage.getItem('todoList') || '[]');
-    items.splice(index, 1);
-    setList(items);
+    list.splice(index, 1);
+    setList([...list]);
   };
 
   useEffect(() => {
