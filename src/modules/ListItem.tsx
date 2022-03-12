@@ -7,7 +7,7 @@ interface Props {
   item: TodoItem;
   completeTask: (selectedTodo: TodoItem) => void;
   deleteTask: (index: number) => void;
-  show: (key: number) => void;
+  show: () => void;
 }
 
 export const ListItem = (
@@ -35,7 +35,7 @@ export const ListItem = (
           </FormCheck>
         </Col>
         <Col>
-          <Button onClick={() => show(key)} variant="success">
+          <Button onClick={() => show()} variant="success">
             Edit
           </Button>
         </Col>

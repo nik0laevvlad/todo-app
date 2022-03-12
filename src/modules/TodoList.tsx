@@ -18,23 +18,21 @@ export const TodoList = ({
 }: Props) => {
   const [newText, setNewText] = useState('');
   const [hidden, setHidden] = useState(true);
-  const show = (key: number) => {
-    console.log(key);
+  const show = () => {
     setHidden(!hidden);
   };
 
   return (
-    <div>
+    <>
       <div className="mt-3 h2">
         {list.map((item: TodoItem, key: number) => {
           return (
-            <>
+            <div key={key}>
               <ListItem
-                key={key}
                 item={item}
                 completeTask={completeTask}
                 deleteTask={() => deleteTask(key)}
-                show={() => show(key)}
+                show={show}
               />
               <Form
                 hidden={hidden}
@@ -64,10 +62,10 @@ export const TodoList = ({
                   </Col>
                 </Row>
               </Form>
-            </>
+            </div>
           );
         })}
       </div>
-    </div>
+    </>
   );
 };
