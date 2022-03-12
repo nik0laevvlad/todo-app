@@ -7,10 +7,11 @@ interface Props {
   item: TodoItem;
   completeTask: (selectedTodo: TodoItem) => void;
   deleteTask: (index: number) => void;
+  show: (key: number) => void;
 }
 
 export const ListItem = (
-  { item, completeTask, deleteTask }: Props,
+  { item, completeTask, deleteTask, show }: Props,
   key: number,
 ) => {
   return (
@@ -32,6 +33,11 @@ export const ListItem = (
               </div>
             </FormCheckLabel>
           </FormCheck>
+        </Col>
+        <Col>
+          <Button onClick={() => show(key)} variant="success">
+            Edit
+          </Button>
         </Col>
         <Col>
           <Button onClick={() => deleteTask(key)} variant="danger">
