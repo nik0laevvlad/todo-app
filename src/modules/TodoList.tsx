@@ -18,8 +18,16 @@ export const TodoList = ({
 }: Props) => {
   const [newText, setNewText] = useState('');
   const [hidden, setHidden] = useState(true);
-  const show = () => {
-    setHidden(!hidden);
+  const [id, setId] = useState(0);
+  
+  const show = (key: number) => {
+    setId(key);
+    setNewText(list[key].text);
+    if (key === id) {
+      setHidden(!hidden);
+    } else {
+      setHidden(false);
+    }
   };
 
   return (
@@ -32,40 +40,40 @@ export const TodoList = ({
                 item={item}
                 completeTask={completeTask}
                 deleteTask={() => deleteTask(key)}
-                show={show}
+                show={() => show(key)}
               />
-              <Form
-                hidden={hidden}
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  updateTask(item, newText);
-                  setNewText('');
-                }}
-              >
-                <Row className="mt-5">
-                  <Col md="auto">
-                    <FormControl
-                      placeholder={item.text}
-                      value={newText}
-                      onChange={(e) => setNewText(e.target.value)}
-                    />
-                  </Col>
-                  <Col md="auto">
-                    <Button
-                      onClick={() => {
-                        updateTask(item, newText);
-                        setNewText('');
-                      }}
-                    >
-                      Update
-                    </Button>
-                  </Col>
-                </Row>
-              </Form>
             </div>
           );
         })}
       </div>
+      <Form
+        hidden={hidden}
+        onSubmit={(e) => {
+          e.preventDefault();
+          updateTask(list[id], newText);
+          setNewText('');
+        }}
+      >
+        <Row className="mt-5">
+          <Col md="auto">
+            <FormControl
+              placeholder="update"
+              value={newText}
+              onChange={(e) => setNewText(e.target.value)}
+            />
+          </Col>
+          <Col md="auto">
+            <Button
+              onClick={() => {
+                updateTask(list[id], newText);
+                setNewText('');
+              }}
+            >
+              Update
+            </Button>
+          </Col>
+        </Row>
+      </Form>
     </>
   );
 };
