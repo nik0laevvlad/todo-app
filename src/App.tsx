@@ -24,8 +24,10 @@ function App() {
   };
 
   const updateTask = (selectedTodo: TodoItem, text: string) => {
-    selectedTodo.text = text;
-    setList([...list]);
+    if (text.trim() !== '') {
+      selectedTodo.text = text;
+      setList([...list]);
+    }
   };
 
   useEffect(() => {
