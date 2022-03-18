@@ -19,7 +19,7 @@ export const TodoList = ({
   const [newText, setNewText] = useState('');
   const [hidden, setHidden] = useState(true);
   const [id, setId] = useState(0);
-  
+
   const show = (key: number) => {
     setId(key);
     setNewText(list[key].text);
@@ -33,14 +33,14 @@ export const TodoList = ({
   return (
     <>
       <div className="mt-3 h2">
-        {list.map((item: TodoItem, key: number) => {
+        {list.map((item: TodoItem, index: number) => {
           return (
-            <div key={key}>
+            <div key={index}>
               <ListItem
                 item={item}
                 completeTask={completeTask}
-                deleteTask={() => deleteTask(key)}
-                show={() => show(key)}
+                deleteTask={() => deleteTask(index)}
+                show={() => show(index)}
               />
             </div>
           );
