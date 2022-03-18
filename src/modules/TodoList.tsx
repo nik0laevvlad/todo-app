@@ -1,7 +1,7 @@
 import { TodoItem } from '../types';
 import { ListItem } from './ListItem';
 import React, { useState } from 'react';
-import { Button, Col, Form, FormControl, Row } from 'react-bootstrap';
+import { UpdateTask } from './UpdateTask';
 
 interface Props {
   list: TodoItem[];
@@ -16,13 +16,12 @@ export const TodoList = ({
   deleteTask,
   updateTask,
 }: Props) => {
-  const [newText, setNewText] = useState('');
   const [hidden, setHidden] = useState(true);
   const [id, setId] = useState(0);
 
   const show = (key: number) => {
     setId(key);
-    setNewText(list[key].text);
+    // setNewText(list[key].text);
     if (key === id) {
       setHidden(!hidden);
     } else {
@@ -46,34 +45,7 @@ export const TodoList = ({
           );
         })}
       </div>
-      <Form
-        hidden={hidden}
-        onSubmit={(e) => {
-          e.preventDefault();
-          updateTask(list[id], newText);
-          setNewText('');
-        }}
-      >
-        <Row className="mt-5">
-          <Col md="auto">
-            <FormControl
-              placeholder="update"
-              value={newText}
-              onChange={(e) => setNewText(e.target.value)}
-            />
-          </Col>
-          <Col md="auto">
-            <Button
-              onClick={() => {
-                updateTask(list[id], newText);
-                setNewText('');
-              }}
-            >
-              Update
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+      <UpdateTask hidden={hidden} id={id} list={list} updateTask={updateTask} />
     </>
   );
 };
