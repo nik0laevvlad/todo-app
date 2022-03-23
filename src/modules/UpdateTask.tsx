@@ -1,23 +1,19 @@
 import { Button, Col, Form, FormControl, Row } from 'react-bootstrap';
 import React, { useState } from 'react';
-import { TodoItem } from '../types';
 
 interface Props {
-  hidden: boolean;
-  updateTask: (selectedTodo: TodoItem, text: string) => void;
-  list: TodoItem[];
-  id: number;
+  updateTask: (text: string) => void;
+  initialState: string;
 }
 
-export const UpdateTask = ({ hidden, updateTask, list, id }: Props) => {
-  const [newText, setNewText] = useState('');
+export const UpdateTask = ({ updateTask, initialState }: Props) => {
+  const [newText, setNewText] = useState(initialState);
 
   return (
     <Form
-      hidden={hidden}
       onSubmit={(e) => {
         e.preventDefault();
-        updateTask(list[id], newText);
+        updateTask(newText);
         setNewText('');
       }}
     >
