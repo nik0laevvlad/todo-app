@@ -17,6 +17,7 @@ export const TodoList = ({
   updateTask,
 }: Props) => {
   const [id, setId] = useState<number>();
+  const [newValue, setNewValue] = useState('');
 
   const show = (key: number) => {
     if (key !== id) {
@@ -45,8 +46,9 @@ export const TodoList = ({
       </div>
       {id !== undefined && (
         <UpdateTask
-          updateTask={() => updateTask}
-          initialState={list[id].text}
+          updateTask={() => updateTask(list[id], newValue)}
+          initialValue={list[id].text}
+          changeValue={(text: string) => setNewValue(text)}
         />
       )}
     </>

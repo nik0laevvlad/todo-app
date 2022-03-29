@@ -3,11 +3,16 @@ import React, { useState } from 'react';
 
 interface Props {
   updateTask: (text: string) => void;
-  initialState: string;
+  initialValue: string;
+  changeValue: (text: string) => void;
 }
 
-export const UpdateTask = ({ updateTask, initialState }: Props) => {
-  const [newText, setNewText] = useState(initialState);
+export const UpdateTask = ({
+  updateTask,
+  initialValue,
+  changeValue,
+}: Props) => {
+  const [newText, setNewText] = useState(initialValue);
 
   return (
     <Form
@@ -20,9 +25,11 @@ export const UpdateTask = ({ updateTask, initialState }: Props) => {
       <Row className="mt-5">
         <Col md="auto">
           <FormControl
-            placeholder="update"
             value={newText}
-            onChange={(e) => setNewText(e.target.value)}
+            onChange={(e) => {
+              setNewText(e.target.value);
+              changeValue(newText);
+            }}
           />
         </Col>
         <Col md="auto">
