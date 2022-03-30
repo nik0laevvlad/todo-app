@@ -4,14 +4,9 @@ import React, { useState } from 'react';
 interface Props {
   updateTask: (text: string) => void;
   initialValue: string;
-  changeValue: (text: string) => void;
 }
 
-export const UpdateTask = ({
-  updateTask,
-  initialValue,
-  changeValue,
-}: Props) => {
+export const UpdateTask = ({ updateTask, initialValue }: Props) => {
   const [newText, setNewText] = useState(initialValue);
 
   return (
@@ -28,7 +23,6 @@ export const UpdateTask = ({
             value={newText}
             onChange={(e) => {
               setNewText(e.target.value);
-              changeValue(newText);
             }}
           />
         </Col>
