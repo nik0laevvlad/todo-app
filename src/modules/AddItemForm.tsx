@@ -25,14 +25,7 @@ export const AddItemForm = ({ addTodo }: Props) => {
           />
         </Col>
         <Col md="auto">
-          <Button
-            onClick={() => {
-              addTodo(text);
-              setText('');
-            }}
-          >
-            Submit
-          </Button>
+          <Button type="submit">Submit</Button>
         </Col>
       </Row>
     </Form>

@@ -6,13 +6,11 @@ import FormCheckLabel from 'react-bootstrap/FormCheckLabel';
 interface Props {
   item: TodoItem;
   completeTask: (selectedTodo: TodoItem) => void;
-  deleteTask: (index: number) => void;
+  deleteTask: () => void;
+  show: () => void;
 }
 
-export const ListItem = (
-  { item, completeTask, deleteTask }: Props,
-  key: number,
-) => {
+export const ListItem = ({ item, completeTask, deleteTask, show }: Props) => {
   return (
     <>
       <Row>
@@ -34,7 +32,12 @@ export const ListItem = (
           </FormCheck>
         </Col>
         <Col>
-          <Button onClick={() => deleteTask(key)} variant="danger">
+          <Button onClick={() => show()} variant="success">
+            Edit
+          </Button>
+        </Col>
+        <Col>
+          <Button onClick={() => deleteTask()} variant="danger">
             Delete
           </Button>
         </Col>

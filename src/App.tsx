@@ -23,6 +23,13 @@ function App() {
     setList([...list]);
   };
 
+  const updateTask = (selectedTodo: TodoItem, text: string) => {
+    if (text.trim() !== '') {
+      selectedTodo.text = text;
+      setList([...list]);
+    }
+  };
+
   useEffect(() => {
     const storage = JSON.parse(localStorage.getItem('todoList') || '[]');
     setList(storage);
@@ -40,6 +47,7 @@ function App() {
           completeTask={completeTask}
           list={list}
           deleteTask={deleteTask}
+          updateTask={updateTask}
         />
       </Container>
     </>
