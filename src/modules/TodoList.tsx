@@ -16,14 +16,13 @@ export const TodoList = ({
   deleteTask,
   updateTask,
 }: Props) => {
-  const [id, setId] = useState<number>();
+  const [selectedId, setSelectedId] = useState<number>();
 
   const show = (key: number) => {
-    if (key !== id) {
-      setId(key);
-    }
-    if (key === id) {
-      setId(undefined);
+    if (key !== selectedId) {
+      setSelectedId(key);
+    } else {
+      setSelectedId(undefined);
     }
   };
 
@@ -43,10 +42,10 @@ export const TodoList = ({
           );
         })}
       </div>
-      {id !== undefined && (
+      {selectedId !== undefined && (
         <UpdateTask
-          updateTask={(text: string) => updateTask(list[id], text)}
-          initialValue={list[id].text}
+          updateTask={(text: string) => updateTask(list[selectedId], text)}
+          initialValue={list[selectedId].text}
         />
       )}
     </>
