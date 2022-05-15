@@ -1,7 +1,4 @@
 import { TodoItem } from '../types';
-import { Button, Col, FormCheck, Row } from 'react-bootstrap';
-import FormCheckInput from 'react-bootstrap/FormCheckInput';
-import FormCheckLabel from 'react-bootstrap/FormCheckLabel';
 
 interface Props {
   item: TodoItem;
@@ -12,36 +9,21 @@ interface Props {
 
 export const ListItem = ({ item, completeTask, deleteTask, show }: Props) => {
   return (
-    <>
-      <Row>
-        <Col>
-          <FormCheck>
-            <FormCheckInput
-              checked={item.completed}
-              onChange={() => completeTask(item)}
-            />
-            <FormCheckLabel>
-              <div
-                style={{
-                  textDecoration: item.completed ? 'line-through' : 'none',
-                }}
-              >
-                {item.text}
-              </div>
-            </FormCheckLabel>
-          </FormCheck>
-        </Col>
-        <Col>
-          <Button onClick={() => show()} variant="success">
-            Edit
-          </Button>
-        </Col>
-        <Col>
-          <Button onClick={() => deleteTask()} variant="danger">
-            Delete
-          </Button>
-        </Col>
-      </Row>
-    </>
+    <div className='task'>
+      <label className='task_label'>
+        <input
+          className='task_checkbox'
+          type='checkbox'
+          checked={item.completed}
+          onChange={() => completeTask(item)} />
+        <h6 className='task_text' style={{
+          textDecoration: item.completed ? 'line-through' : 'none',
+        }}>
+          {item.text}
+        </h6>
+      </label>
+      <button className='task_edit' onClick={() => show()} />
+      <button className='task_delete' onClick={() => deleteTask()} />
+    </div>
   );
 };

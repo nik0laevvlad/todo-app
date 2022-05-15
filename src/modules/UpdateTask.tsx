@@ -1,4 +1,4 @@
-import { Button, Col, Form, FormControl, Row } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import React, { useState } from 'react';
 
 interface Props {
@@ -11,25 +11,21 @@ export const UpdateTask = ({ updateTask, initialValue }: Props) => {
 
   return (
     <Form
+      className='input'
       onSubmit={(e) => {
         e.preventDefault();
         updateTask(newText);
         setNewText('');
       }}
     >
-      <Row className="mt-5">
-        <Col md="auto">
-          <FormControl
-            value={newText}
-            onChange={(e) => {
-              setNewText(e.target.value);
-            }}
-          />
-        </Col>
-        <Col md="auto">
-          <Button type="submit">Update</Button>
-        </Col>
-      </Row>
+      <input
+        className='input_value'
+        value={newText}
+        onChange={(e) => {
+          setNewText(e.target.value);
+        }}
+      />
+      <button className='input_update' type='submit' />
     </Form>
   );
 };
