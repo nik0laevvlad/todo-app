@@ -1,4 +1,4 @@
-import { Form } from 'react-bootstrap';
+import { Button, Form, FormControl } from 'react-bootstrap';
 import React, { useState } from 'react';
 
 interface Props {
@@ -17,13 +17,13 @@ export const AddItemForm = ({ addTodo }: Props) => {
         setText('');
       }}
     >
-      <input
+      <FormControl
         className='input_value'
         placeholder='To Do...'
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button className='input_button' type='submit' />
+      <Button className='input_button' type='submit' />
     </Form>
   );
 };

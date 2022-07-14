@@ -1,4 +1,7 @@
 import { TodoItem } from '../types';
+import FormCheckLabel from "react-bootstrap/FormCheckLabel";
+import FormCheckInput from "react-bootstrap/FormCheckInput";
+import { Button } from "react-bootstrap";
 
 interface Props {
   item: TodoItem;
@@ -10,8 +13,8 @@ interface Props {
 export const ListItem = ({ item, completeTask, deleteTask, show }: Props) => {
   return (
     <div className='task'>
-      <label className='task_label'>
-        <input
+      <FormCheckLabel className='task_label'>
+        <FormCheckInput
           className='task_checkbox'
           type='checkbox'
           checked={item.completed}
@@ -21,9 +24,9 @@ export const ListItem = ({ item, completeTask, deleteTask, show }: Props) => {
         }}>
           {item.text}
         </h6>
-      </label>
-      <button className='task_edit' onClick={() => show()} />
-      <button className='task_delete' onClick={() => deleteTask()} />
+      </FormCheckLabel>
+      <Button className='task_edit' onClick={() => show()} />
+      <Button className='task_delete' onClick={() => deleteTask()} />
     </div>
   );
 };
