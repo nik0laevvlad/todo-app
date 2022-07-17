@@ -2,6 +2,10 @@
 
 public class TodoItem
 {
+    protected TodoItem()
+    {
+    }
+    
     private TodoItem(string text, bool completed)
     {
         Text = text;

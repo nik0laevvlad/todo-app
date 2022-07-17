@@ -3,8 +3,8 @@ using TodoApp.Api.Models;
 
 namespace TodoApp.Api.Controllers;
 
-[Route("api/home")]
-public class HomeController : ControllerBase
+[Route("api/todo")]
+public class TodoItemController : ControllerBase
 {
     [HttpGet("main")]
     public TodoItem GetData()
