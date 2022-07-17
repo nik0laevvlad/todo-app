@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { TodoItem } from './types';
 import { AddItemForm, TodoList } from './modules';
+import axios from 'axios';
 
 function App() {
   const [list, setList] = useState<TodoItem[]>([]);
+  const [data, setData] = useState<TodoItem>();
 
   const addTodo = (item: string) => {
     const newItem = { text: item, completed: false };
@@ -37,6 +39,14 @@ function App() {
   useEffect(() => {
     localStorage.setItem('todoList', JSON.stringify(list));
   }, [list]);
+
+  useEffect(() => {
+    axios.get('/api/home/main')
+      .then((response) => {
+        console.log(response);
+        setData(response.data);
+      });
+  }, [setData]);
 
   return (
     <>
