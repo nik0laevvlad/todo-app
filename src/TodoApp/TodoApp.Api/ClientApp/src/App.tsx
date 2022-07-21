@@ -1,9 +1,11 @@
 import { TodoApp } from './modules';
 
 function App() {
-  return <>
-    <TodoApp />
-  </>;
+  return (
+    <>
+      <TodoApp />
+    </>
+  );
 }
 
 export default App;

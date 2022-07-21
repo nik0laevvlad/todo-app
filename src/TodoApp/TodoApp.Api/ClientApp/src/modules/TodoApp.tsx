@@ -6,23 +6,30 @@ import axios from 'axios';
 
 export function TodoApp() {
   const [list, setList] = useState<TodoItem[]>([]);
-  const [data, setData] = useState<TodoItem>();
 
   const addTodo = (item: string) => {
     const newItem = { text: item, completed: false };
     if (newItem.text.trim() !== '') {
-      setList([...list, newItem]);
+      axios
+        .post('api/todo', {
+          text: newItem.text,
+        })
+        .then((response) => {
+          console.log(response.data);
+        });
     }
   };
 
   const completeTask = (selectedTodo: TodoItem) => {
-    selectedTodo.completed = !selectedTodo.completed;
-    setList([...list]);
+    axios.put(`api/todo/${selectedTodo.id}/complete`).then((response) => {
+      console.log(response.data);
+    });
   };
 
-  const deleteTask = (index: number) => {
-    list.splice(index, 1);
-    setList([...list]);
+  const deleteTask = (id: string) => {
+    axios.delete(`api/todo/${id}`).then((response) => {
+      console.log(response.data);
+    });
   };
 
   const updateTask = (selectedTodo: TodoItem, text: string) => {
@@ -33,26 +40,15 @@ export function TodoApp() {
   };
 
   useEffect(() => {
-    const storage = JSON.parse(localStorage.getItem('todoList') || '[]');
-    setList(storage);
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem('todoList', JSON.stringify(list));
-  }, [list]);
-
-  useEffect(() => {
-    axios.get('/api/todo/main')
-      .then((response) => {
-        console.log(response);
-        setData(response.data);
-      });
-  }, [setData]);
+    axios.get('/api/todo').then((response) => {
+      console.log(response);
+      setList(response.data);
+    });
+  }, [setList]);
 
   return (
     <>
       <Container>
-        {data?.text}
         <AddItemForm addTodo={(item) => addTodo(item)} />
         <TodoList
           completeTask={completeTask}

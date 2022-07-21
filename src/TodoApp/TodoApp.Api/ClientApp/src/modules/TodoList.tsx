@@ -6,7 +6,7 @@ import { UpdateTask } from './UpdateTask';
 interface Props {
   list: TodoItem[];
   completeTask: (selectedTodo: TodoItem) => void;
-  deleteTask: (index: number) => void;
+  deleteTask: (id: string) => void;
   updateTask: (selectedTodo: TodoItem, text: string) => void;
 }
 
@@ -35,7 +35,7 @@ export const TodoList = ({
               <ListItem
                 item={item}
                 completeTask={completeTask}
-                deleteTask={() => deleteTask(index)}
+                deleteTask={() => deleteTask(item.id)}
                 show={() => show(index)}
               />
             </div>

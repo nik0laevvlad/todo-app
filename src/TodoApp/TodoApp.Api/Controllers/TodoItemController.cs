@@ -1,15 +1,42 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Models;
+using TodoApp.Api.UseCases;
 
 namespace TodoApp.Api.Controllers;
 
 [Route("api/todo")]
 public class TodoItemController : ControllerBase
 {
-    [HttpGet("main")]
-    public TodoItem GetData()
+    private readonly IMediator _mediator;
+
+    public TodoItemController(IMediator mediator)
     {
-        var item = TodoItem.New("testText", false);
-        return item;
+        _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<TodoItem[]> GetAllAsync()
+    {
+        var query = new GetItemsQuery();
+        return await _mediator.Send(query);
+    }
+
+    [HttpPost]
+    public async Task<Guid> AddTodoItem([FromBody] CreateTodoItemCommand command)
+    {
+        return await _mediator.Send(command);
+    }
+
+    [HttpPut("{id:guid}/complete")]
+    public async Task CompleteItem(Guid id)
+    {
+        await _mediator.Send(new ChangeTodoItemStatusCommand(id));
+    }
+
+    [HttpDelete("{id:guid}")]
+    public async Task DeleteItem(Guid id)
+    {
+        await _mediator.Send(new DeleteItemCommand(id));
     }
 }
