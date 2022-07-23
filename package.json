@@ -19,6 +19,7 @@
     "react": "^17.0.2",
     "react-bootstrap": "^2.1.2",
     "react-dom": "^17.0.2",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "sass": "^1.49.7",
     "typescript": "^4.5.5",
@@ -29,7 +30,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "lint": "eslint --ext js,jsx,ts,tsx src"
   },
   "eslintConfig": {
     "extends": [
@@ -40,7 +42,9 @@
       "prettier"
     ],
     "rules": {
-      "require-jsdoc": 0
+      "require-jsdoc": 0,
+      "react/jsx-pascal-case": "off",
+      "jsx-a11y/anchor-is-valid": "off"
     }
   },
   "browserslist": {
