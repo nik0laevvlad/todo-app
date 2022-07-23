@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
 import { TodoItem } from './types';
 import { AddItemForm, TodoList } from './modules';
 
@@ -41,7 +40,8 @@ function App() {
 
   return (
     <>
-      <Container>
+      <div className='container'>
+        <h1>To Do App</h1>
         <AddItemForm addTodo={(item) => addTodo(item)} />
         <TodoList
           completeTask={completeTask}
@@ -49,7 +49,7 @@ function App() {
           deleteTask={deleteTask}
           updateTask={updateTask}
         />
-      </Container>
+      </div>
     </>
   );
 }

@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/reset.sass';
+import './styles/styles.sass';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/todo-app" element={<App />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root'),
 );
