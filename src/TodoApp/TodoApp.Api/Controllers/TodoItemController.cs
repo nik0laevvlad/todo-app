@@ -28,6 +28,12 @@ public class TodoItemController : ControllerBase
         return await _mediator.Send(command);
     }
 
+    [HttpPut]
+    public async Task UpdateTodoItem([FromBody] UpdateTodoItemCommand command)
+    {
+        await _mediator.Send(command);
+    }
+
     [HttpPut("{id:guid}/complete")]
     public async Task CompleteItem(Guid id)
     {
