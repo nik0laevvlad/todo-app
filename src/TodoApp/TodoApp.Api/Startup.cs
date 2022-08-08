@@ -24,6 +24,7 @@ public class Startup
             options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
         services.AddMediatR(typeof(Program));
 
+        services.AddScoped<IUnitOfWork, UnitOfWorkAdapter>();
         services.AddScoped<ITodoItemRepository, TodoItemRepositoryAdapter>();
     }
     

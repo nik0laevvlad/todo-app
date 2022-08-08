@@ -15,13 +15,6 @@ public class TodoItemRepositoryAdapter : ITodoItemRepository
     public async Task AddAsync(TodoItem item)
     {
         await _dbContext.AddAsync(item);
-        await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(TodoItem item)
-    {
-        _dbContext.TodoItems.Update(item);
-        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<TodoItem> ByIdAsync(Guid id)
@@ -32,9 +25,7 @@ public class TodoItemRepositoryAdapter : ITodoItemRepository
     public async Task DeleteAsync(Guid id)
     {
         var item = await ByIdAsync(id);
-
         _dbContext.TodoItems.Remove(item);
-        await _dbContext.SaveChangesAsync();
     }
 
     public async Task<TodoItem[]> GetAllAsync()
