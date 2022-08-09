@@ -14,7 +14,7 @@ namespace TodoApp.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Completed = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

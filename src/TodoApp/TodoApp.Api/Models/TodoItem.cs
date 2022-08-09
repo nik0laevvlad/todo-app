@@ -14,7 +14,7 @@ public class TodoItem
     }
 
     public Guid Id { get; protected set; }
-    public string Text { get; protected set; }
+    public string Text { get; protected set; } = null!;
     public bool Completed { get; protected set; }
 
     internal void UpdateText(string text)

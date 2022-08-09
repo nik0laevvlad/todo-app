@@ -11,9 +11,9 @@ public class CreateTodoItemCommand : IRequest<Guid>
     {
         Text = text;
     }
-    
+
     public string Text { get; }
-    
+
     internal class Handler : IRequestHandler<CreateTodoItemCommand, Guid>
     {
         private readonly ITodoItemRepository _todoItemRepository;

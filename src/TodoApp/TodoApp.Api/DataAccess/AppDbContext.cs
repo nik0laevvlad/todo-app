@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using TodoApp.Api.Models;
 
 namespace TodoApp.Api.DataAccess;
@@ -10,4 +11,9 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<TodoItem> TodoItems { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    }
 }
