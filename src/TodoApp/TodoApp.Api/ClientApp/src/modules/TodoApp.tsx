@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { TodoItem } from '../types';
 import { AddItemForm, TodoList } from './index';
 import axios from 'axios';
@@ -16,6 +16,7 @@ export function TodoApp() {
         })
         .then(() => {
           Notify.success('Item was successfully added');
+          getList();
         });
     }
   };
@@ -23,14 +24,16 @@ export function TodoApp() {
   const completeTask = (selectedTodo: TodoItem) => {
     axios.put(`api/todo/${selectedTodo.id}/complete`).then((response) => {
       console.log(response.data);
+      getList();
     });
   };
 
-  const deleteTask = (id: string) => {
+  const deleteTask = useCallback((id: string) => {
     axios.delete(`api/todo/${id}`).then(() => {
       Notify.success('Item was successfully deleted');
+      getList();
     });
-  };
+  }, []);
 
   const updateTask = (selectedTodo: TodoItem, text: string) => {
     if (text.trim() !== '') {
@@ -41,15 +44,20 @@ export function TodoApp() {
         })
         .then(() => {
           Notify.success('Item was successfully updated');
+          getList();
         });
     }
   };
 
-  useEffect(() => {
+  const getList = () => {
     axios.get('/api/todo').then((response) => {
       setList(response.data);
     });
-  }, [setList]);
+  };
+
+  useEffect(() => {
+    getList();
+  }, []);
 
   return (
     <>
