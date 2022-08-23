@@ -1,13 +1,13 @@
-import { TodoItem } from '../types';
+import { TodoItemDto } from '../types';
 import { ListItem } from './ListItem';
 import React, { useState } from 'react';
-import { UpdateTask } from './UpdateTask';
+import { UpdateTaskForm } from './Forms';
 
 interface Props {
-  list: TodoItem[];
-  completeTask: (selectedTodo: TodoItem) => void;
+  list: TodoItemDto[];
+  completeTask: (selectedTodo: TodoItemDto) => void;
   deleteTask: (id: string) => void;
-  updateTask: (selectedTodo: TodoItem, text: string) => void;
+  updateTask: (selectedTodo: TodoItemDto, text: string) => void;
 }
 
 export const TodoList = ({
@@ -29,7 +29,7 @@ export const TodoList = ({
   return (
     <>
       <div className="mt-3 h2">
-        {list.map((item: TodoItem, index: number) => {
+        {list.map((item: TodoItemDto, index: number) => {
           return (
             <div key={index}>
               <ListItem
@@ -43,9 +43,10 @@ export const TodoList = ({
         })}
       </div>
       {selectedId !== undefined && (
-        <UpdateTask
+        <UpdateTaskForm
           updateTask={(text: string) => updateTask(list[selectedId], text)}
           initialValue={list[selectedId].text}
+          onUpdated={() => setSelectedId(undefined)}
         />
       )}
     </>

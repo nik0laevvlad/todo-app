@@ -11,7 +11,8 @@ public class TodoItemConfiguration : IEntityTypeConfiguration<TodoItem>
         builder.ToTable("TodoItems");
 
         builder.HasKey(x => x.Id);
-
         builder.Property(x => x.Text).HasMaxLength(500);
+        builder.HasOne(x => x.List).WithMany(x => x.TodoItems).HasForeignKey(x => x.ParentId).IsRequired()
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

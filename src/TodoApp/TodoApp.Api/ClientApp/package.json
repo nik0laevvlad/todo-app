@@ -37,15 +37,8 @@
     "lint": "eslint --ext js,jsx,ts,tsx src"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "eslint:recommended",
-      "google",
-      "prettier"
-    ],
+    "extends": ["react-app", "react-app/jest"],
     "rules": {
-      "require-jsdoc": 0,
       "react/jsx-pascal-case": "off",
       "jsx-a11y/anchor-is-valid": "off"
     }

@@ -31,6 +31,9 @@ namespace TodoApp.Api.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
+                    b.Property<Guid>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -38,7 +41,41 @@ namespace TodoApp.Api.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParentId");
+
                     b.ToTable("TodoItems", (string)null);
+                });
+
+            modelBuilder.Entity("TodoApp.Api.Models.TodoList", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TodoLists", (string)null);
+                });
+
+            modelBuilder.Entity("TodoApp.Api.Models.TodoItem", b =>
+                {
+                    b.HasOne("TodoApp.Api.Models.TodoList", "List")
+                        .WithMany("TodoItems")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("List");
+                });
+
+            modelBuilder.Entity("TodoApp.Api.Models.TodoList", b =>
+                {
+                    b.Navigation("TodoItems");
                 });
 #pragma warning restore 612, 618
         }

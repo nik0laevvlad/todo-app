@@ -1,11 +1,11 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TodoApp.Api.Models;
-using TodoApp.Api.UseCases;
+using TodoApp.Api.UseCases.List.Item;
 
 namespace TodoApp.Api.Controllers;
 
-[Route("api/todo")]
+[Route("api/list/{parentId:guid}/item")]
 public class TodoItemController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -16,9 +16,9 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<TodoItem[]> GetAllAsync()
+    public async Task<TodoItem[]> GetAllAsync(Guid parentId)
     {
-        var query = new GetItemsQuery();
+        var query = new GetItemsQuery(ParentId: parentId);
         return await _mediator.Send(query);
     }
 
@@ -28,21 +28,21 @@ public class TodoItemController : ControllerBase
         return await _mediator.Send(command);
     }
 
-    [HttpPut]
+    [HttpPut("{id:guid}")]
     public async Task UpdateTodoItem([FromBody] UpdateTodoItemCommand command)
     {
         await _mediator.Send(command);
     }
 
     [HttpPut("{id:guid}/complete")]
-    public async Task CompleteItem(Guid id)
+    public async Task CompleteItem(Guid id, Guid parentId)
     {
-        await _mediator.Send(new ChangeTodoItemStatusCommand(id));
+        await _mediator.Send(new ChangeTodoItemStatusCommand(id, parentId));
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task DeleteItem(Guid id)
+    public async Task DeleteItem(Guid id, Guid parentId)
     {
-        await _mediator.Send(new DeleteItemCommand(id));
+        await _mediator.Send(new DeleteItemCommand(id, parentId));
     }
 }

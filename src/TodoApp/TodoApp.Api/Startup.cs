@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Text.Json.Serialization;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TodoApp.Api.DataAccess;
 using TodoApp.Api.DataAccess.Repositories;
@@ -18,6 +19,7 @@ public class Startup
     {
         services
             .AddControllers()
+            .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
             .Services
             .AddHealthChecks();
         services.AddDbContext<AppDbContext>(options =>
@@ -25,9 +27,10 @@ public class Startup
         services.AddMediatR(typeof(Program));
 
         services.AddScoped<IUnitOfWork, UnitOfWorkAdapter>();
-        services.AddScoped<ITodoItemRepository, TodoItemRepositoryAdapter>();
+        services
+            .AddScoped<ITodoListRepository, TodoListRepositoryAdapter>();
     }
-    
+
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsProduction())
@@ -38,9 +41,9 @@ public class Startup
         }
         if (env.IsDevelopment())
         {
-            app.UseDeveloperExceptionPage();   
+            app.UseDeveloperExceptionPage();
         }
-        
+
         app
             .UseHealthChecks("/health")
             .UseRouting()
