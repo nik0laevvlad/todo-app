@@ -5,7 +5,7 @@ using TodoApp.Api.UseCases.List.Item;
 
 namespace TodoApp.Api.Controllers;
 
-[Route("api/list/{parentId:guid}/item")]
+[Route("api/list/{listId:guid}/item")]
 public class TodoItemController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -16,9 +16,9 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<TodoItem[]> GetAllAsync(Guid parentId)
+    public async Task<TodoItem[]> GetAllAsync(Guid listId)
     {
-        var query = new GetItemsQuery(ParentId: parentId);
+        var query = new GetItemsQuery(ListId: listId);
         return await _mediator.Send(query);
     }
 
@@ -35,14 +35,14 @@ public class TodoItemController : ControllerBase
     }
 
     [HttpPut("{id:guid}/complete")]
-    public async Task CompleteItem(Guid id, Guid parentId)
+    public async Task CompleteItem(Guid id, Guid listId)
     {
-        await _mediator.Send(new ChangeTodoItemStatusCommand(id, parentId));
+        await _mediator.Send(new ChangeTodoItemStatusCommand(id, listId));
     }
 
     [HttpDelete("{id:guid}")]
-    public async Task DeleteItem(Guid id, Guid parentId)
+    public async Task DeleteItem(Guid id, Guid listId)
     {
-        await _mediator.Send(new DeleteItemCommand(id, parentId));
+        await _mediator.Send(new DeleteItemCommand(id, listId));
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TodoApp.Api.DataAccess;
 
@@ -11,9 +12,10 @@ using TodoApp.Api.DataAccess;
 namespace TodoApp.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220905220807_AddUsers")]
+    partial class AddUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,7 +33,7 @@ namespace TodoApp.Api.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ListId")
+                    b.Property<Guid>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Text")
@@ -41,7 +43,7 @@ namespace TodoApp.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ListId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("TodoItems", (string)null);
                 });
@@ -93,11 +95,13 @@ namespace TodoApp.Api.Migrations
 
             modelBuilder.Entity("TodoApp.Api.Models.TodoItem", b =>
                 {
-                    b.HasOne("TodoApp.Api.Models.TodoList", null)
+                    b.HasOne("TodoApp.Api.Models.TodoList", "List")
                         .WithMany("TodoItems")
-                        .HasForeignKey("ListId")
+                        .HasForeignKey("ParentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("List");
                 });
 
             modelBuilder.Entity("TodoApp.Api.Models.TodoList", b =>

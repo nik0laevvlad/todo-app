@@ -6,14 +6,14 @@ namespace TodoApp.Api.UseCases.List.Item;
 
 public class DeleteItemCommand : IRequest
 {
-    public DeleteItemCommand(Guid id, Guid parentId)
+    public DeleteItemCommand(Guid id, Guid listId)
     {
         Id = id;
-        ParentId = parentId;
+        ListId = listId;
     }
 
     public Guid Id { get; }
-    public Guid ParentId { get; }
+    public Guid ListId { get; }
 
     internal class Handler : IRequestHandler<DeleteItemCommand>
     {
@@ -28,7 +28,7 @@ public class DeleteItemCommand : IRequest
 
         public async Task<Unit> Handle(DeleteItemCommand command, CancellationToken cancellationToken)
         {
-            var list = await _todoListRepository.ByIdAsync(command.ParentId);
+            var list = await _todoListRepository.ByIdAsync(command.ListId);
             list.DeleteItem(command.Id);
 
             await _unitOfWork.CommitAsync();

@@ -6,15 +6,15 @@ namespace TodoApp.Api.UseCases.List.Item;
 
 public class UpdateTodoItemCommand : IRequest
 {
-    public UpdateTodoItemCommand(Guid id, string text, Guid parentId)
+    public UpdateTodoItemCommand(Guid id, string text, Guid listId)
     {
         Id = id;
         Text = text;
-        ParentId = parentId;
+        ListId = listId;
     }
 
     public Guid Id { get; }
-    public Guid ParentId { get; }
+    public Guid ListId { get; }
     public string Text { get; }
 
     internal class Handler : IRequestHandler<UpdateTodoItemCommand>
@@ -30,7 +30,7 @@ public class UpdateTodoItemCommand : IRequest
 
         public async Task<Unit> Handle(UpdateTodoItemCommand command, CancellationToken cancellationToken)
         {
-            var list = await _todoListRepository.ByIdAsync(command.ParentId);
+            var list = await _todoListRepository.ByIdAsync(command.ListId);
             list.UpdateItem(command.Id, command.Text);
 
             await _unitOfWork.CommitAsync();

@@ -24,7 +24,7 @@ public class TodoListRepositoryAdapter : ITodoListRepository
 
     public async Task<TodoList> ByIdAsync(Guid id)
     {
-        return await _dbContext.TodoLists.FindAsync(id) ?? throw new Exception("Not found");
+        return await _dbContext.TodoLists.FindAsync(id) ?? throw new Exception("List not found");
     }
 
     public async Task DeleteAsync(Guid id)
@@ -39,9 +39,9 @@ public class TodoListRepositoryAdapter : ITodoListRepository
         return await queryable.ToArrayAsync();
     }
 
-    public async Task<TodoItem[]> GetAllItemsAsync(Guid parentId)
+    public async Task<TodoItem[]> GetAllItemsAsync(Guid listId)
     {
-        var queryable = _dbContext.TodoItems.Where(x => x.ParentId == parentId);
+        var queryable = _dbContext.TodoItems.Where(x => x.ListId == listId);
         return await queryable.ToArrayAsync();
     }
 }

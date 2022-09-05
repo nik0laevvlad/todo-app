@@ -4,7 +4,7 @@ using TodoApp.Api.Models;
 
 namespace TodoApp.Api.UseCases.List.Item;
 
-public record GetItemsQuery(Guid ParentId) : IRequest<TodoItem[]>
+public record GetItemsQuery(Guid ListId) : IRequest<TodoItem[]>
 {
     internal class Handler : IRequestHandler<GetItemsQuery, TodoItem[]>
     {
@@ -17,7 +17,7 @@ public record GetItemsQuery(Guid ParentId) : IRequest<TodoItem[]>
 
         public async Task<TodoItem[]> Handle(GetItemsQuery query, CancellationToken cancellationToken)
         {
-            var items = await _todoListRepository.GetAllItemsAsync(query.ParentId);
+            var items = await _todoListRepository.GetAllItemsAsync(query.ListId);
             return items;
         }
     }

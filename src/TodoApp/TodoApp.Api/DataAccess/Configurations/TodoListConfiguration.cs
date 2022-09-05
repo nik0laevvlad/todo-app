@@ -13,7 +13,7 @@ public class TodoListConfiguration : IEntityTypeConfiguration<TodoList>
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Name).HasMaxLength(250);
 
-        builder.HasMany(x => x.TodoItems).WithOne(x => x.List).HasForeignKey(x => x.ParentId);
+        builder.HasMany(x => x.TodoItems).WithOne().HasForeignKey(x => x.ListId);
         builder.Navigation(x => x.TodoItems).AutoInclude();
     }
 }
