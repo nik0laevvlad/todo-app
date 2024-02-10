@@ -3,6 +3,7 @@ import { NavPanel } from './NavPanel';
 import { http } from './http';
 import { Spinner } from 'react-bootstrap';
 import { UserContextDto } from '../types';
+import { AuthContext } from './AuthContext';
 
 export const Layout: FC = ({ children }) => {
   const [context, setContext] = useState<UserContextDto>();
@@ -12,16 +13,18 @@ export const Layout: FC = ({ children }) => {
   }, []);
 
   if (context == null) {
-    return <Spinner animation="border" />;
+    return <Spinner animation="border" variant="info" />;
   }
 
   return (
-    <section>
-      <header>{context && <NavPanel context={context} />}</header>
+    <AuthContext.Provider value={context}>
+      <section>
+        <header>{context && <NavPanel context={context} />}</header>
 
-      <main className="custom-body">{children}</main>
+        <main className="custom-body">{children}</main>
 
-      <footer></footer>
-    </section>
+        <footer></footer>
+      </section>
+    </AuthContext.Provider>
   );
 };

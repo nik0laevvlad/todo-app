@@ -22,7 +22,7 @@ export const NavPanel = (props: Props) => {
 
         {context.isAuthenticated && (
           <Nav className="me-auto">
-            <Nav.Link href="/who">I Am</Nav.Link>
+            <Nav.Link href="/who-am-i">I Am</Nav.Link>
           </Nav>
         )}
 

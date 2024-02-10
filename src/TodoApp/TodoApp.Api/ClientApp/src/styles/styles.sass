@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Roboto:wght@400;500&display=swap')
 
+$blue-color: #3F72AF
+$white-background: #DBE2EF
+
 .custom-body
   font: 16px/1.4 'Roboto', sans-serif
-  background: #3F72AF
+  background: $blue-color
   min-height: 100vh
   padding: 1rem
   box-sizing: border-box
@@ -14,6 +17,9 @@
   background: white
   border-radius: 20px
   padding: 20px 10px
+  margin: 20px 10px
+  min-width: 20rem
+  max-width: 30rem
 
 .delete-dropdown
   margin-bottom: 0.5em
@@ -36,8 +42,8 @@ h3
     border-bottom-left-radius: 5px
     padding: 9px 10px
     font: 1rem/1.4 'Roboto', sans-serif
-    background: #DBE2EF
-    outline-color: #3F72AF
+    background: $white-background
+    outline-color: $blue-color
 
     &::placeholder
       color: #7B7B7B
@@ -45,16 +51,22 @@ h3
   &_button
     border-radius: 0 5px 5px 0
     border: none
-    background: #3F72AF url('../icons/plus.svg') no-repeat center center
+    background: $blue-color url('../icons/plus.svg') no-repeat center center
     transition: opacity 0.3s
 
     &:hover
       opacity: 0.7
 
+    &_white
+      background: $white-background url('../icons/plus_black.svg') no-repeat center center
+      outline: none
+      &:hover
+        background: #6C757D url('../icons/plus.svg') no-repeat center center
+
   &_update
     border-radius: 0 5px 5px 0
     border: none
-    background: #3F72AF url('../icons/check.svg') no-repeat center center
+    background: $blue-color url('../icons/check.svg') no-repeat center center
     transition: opacity 0.3s
 
     &:hover
@@ -64,7 +76,7 @@ h3
   display: grid
   grid-template-columns: 1fr 50px 50px
   margin-bottom: 15px
-  background: #DBE2EF
+  background: $white-background
   border-radius: 5px
   padding-right: 10px
 
@@ -96,10 +108,10 @@ h3
 
     &:hover
       opacity: 0.7
-      background-color: #DBE2EF
+      background-color: $white-background
 
     &:focus
-      background-color: #DBE2EF
+      background-color: $white-background
 
   &_edit
     background-image: url('../icons/edit.svg')

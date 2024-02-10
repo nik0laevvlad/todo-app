@@ -7,12 +7,14 @@ namespace TodoApp.Api.UseCases.List;
 
 public class CreateTodoListCommand : IRequest
 {
-    public CreateTodoListCommand(string name)
+    public CreateTodoListCommand(string name, Guid? ownerId)
     {
         Name = name;
+        OwnerId = ownerId;
     }
 
     public string Name { get; }
+    public Guid? OwnerId { get; }
 
     internal class Handler : IRequestHandler<CreateTodoListCommand>
     {
@@ -27,7 +29,7 @@ public class CreateTodoListCommand : IRequest
 
         public async Task<Unit> Handle(CreateTodoListCommand command, CancellationToken cancellationToken)
         {
-            var list = TodoList.New(command.Name);
+            var list = TodoList.New(command.Name, command.OwnerId);
             await _todoListRepository.AddAsync(list);
 
             await _unitOfWork.CommitAsync();

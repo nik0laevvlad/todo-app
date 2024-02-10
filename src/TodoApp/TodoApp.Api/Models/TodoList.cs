@@ -8,25 +8,27 @@ public class TodoList
     {
     }
 
-    private TodoList(Guid id, string name)
+    private TodoList(Guid id, string name, Guid? ownerId)
     {
         Id = id;
         Name = name;
+        OwnerId = ownerId;
     }
 
     public IReadOnlyCollection<TodoItem> TodoItems => _todoItems.AsReadOnly();
 
     public Guid Id { get; protected set; }
     public string Name { get; protected set; } = null!;
+    public Guid? OwnerId { get; protected set; }
 
     public void SetName(string value)
     {
         Name = value;
     }
 
-    public static TodoList New(string name)
+    public static TodoList New(string name, Guid? ownerId)
     {
-        var list = new TodoList(Guid.NewGuid(), name);
+        var list = new TodoList(Guid.NewGuid(), name, ownerId);
         return list;
     }
 

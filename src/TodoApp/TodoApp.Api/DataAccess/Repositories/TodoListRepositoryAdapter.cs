@@ -33,9 +33,19 @@ public class TodoListRepositoryAdapter : ITodoListRepository
         _dbContext.TodoLists.Remove(list);
     }
 
-    public async Task<TodoList[]> GetAllAsync()
+    public async Task<TodoList[]> GetAllAsync(Guid? ownerId = null)
     {
         var queryable = _dbContext.TodoLists.AsQueryable();
+
+        if (ownerId.HasValue)
+        {
+            queryable = queryable.Where(x => x.OwnerId == ownerId.Value || x.OwnerId == null);
+        }
+        else
+        {
+            queryable = queryable.Where(x => x.OwnerId == null);
+        }
+
         return await queryable.ToArrayAsync();
     }
 

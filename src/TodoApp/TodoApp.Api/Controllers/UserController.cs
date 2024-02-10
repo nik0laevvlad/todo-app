@@ -34,7 +34,7 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("who")]
+    [HttpGet("who-am-i")]
     public async Task<CurrentUserDto> Who()
     {
         var user = await _userRepository.ByIdAsync(_authPort.Id!.Value);
