@@ -44,7 +44,10 @@ export const TodoList = ({
       </div>
       {selectedId !== undefined && (
         <UpdateTask
-          updateTask={(text: string) => updateTask(list[selectedId], text)}
+          updateTask={(text: string) => {
+            updateTask(list[selectedId], text);
+            setSelectedId(undefined);
+          }}
           initialValue={list[selectedId].text}
         />
       )}
