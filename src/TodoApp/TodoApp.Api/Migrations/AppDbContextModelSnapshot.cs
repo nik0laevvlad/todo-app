@@ -31,7 +31,7 @@ namespace TodoApp.Api.Migrations
                     b.Property<bool>("Completed")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ParentId")
+                    b.Property<Guid>("ListId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Text")
@@ -41,7 +41,7 @@ namespace TodoApp.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentId");
+                    b.HasIndex("ListId");
 
                     b.ToTable("TodoItems", (string)null);
                 });
@@ -57,20 +57,50 @@ namespace TodoApp.Api.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.ToTable("TodoLists", (string)null);
                 });
 
+            modelBuilder.Entity("TodoApp.Api.Models.UserEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users", (string)null);
+                });
+
             modelBuilder.Entity("TodoApp.Api.Models.TodoItem", b =>
                 {
-                    b.HasOne("TodoApp.Api.Models.TodoList", "List")
+                    b.HasOne("TodoApp.Api.Models.TodoList", null)
                         .WithMany("TodoItems")
-                        .HasForeignKey("ParentId")
+                        .HasForeignKey("ListId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("List");
                 });
 
             modelBuilder.Entity("TodoApp.Api.Models.TodoList", b =>

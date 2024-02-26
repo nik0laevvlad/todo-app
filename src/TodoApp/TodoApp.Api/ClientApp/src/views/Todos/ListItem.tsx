@@ -1,4 +1,4 @@
-import { TodoItemDto } from '../types';
+import { TodoItemDto } from '../../types';
 import FormCheckLabel from 'react-bootstrap/FormCheckLabel';
 import FormCheckInput from 'react-bootstrap/FormCheckInput';
 import { Button } from 'react-bootstrap';

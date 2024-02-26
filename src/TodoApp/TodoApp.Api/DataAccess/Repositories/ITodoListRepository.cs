@@ -8,6 +8,6 @@ public interface ITodoListRepository
     Task AddItemAsync(TodoItem item);
     Task<TodoList> ByIdAsync(Guid id);
     Task DeleteAsync(Guid id);
-    Task<TodoList[]> GetAllAsync();
-    Task<TodoItem[]> GetAllItemsAsync(Guid parentId);
+    Task<TodoList[]> GetAllAsync(Guid? ownerId = null);
+    Task<TodoItem[]> GetAllItemsAsync(Guid listId);
 }

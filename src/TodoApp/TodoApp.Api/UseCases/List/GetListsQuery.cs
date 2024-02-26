@@ -4,7 +4,7 @@ using TodoApp.Api.Models;
 
 namespace TodoApp.Api.UseCases.List;
 
-public record GetListsQuery : IRequest<TodoList[]>
+public record GetListsQuery(Guid? OwnerId) : IRequest<TodoList[]>
 {
     internal class Handler : IRequestHandler<GetListsQuery, TodoList[]>
     {
@@ -17,7 +17,7 @@ public record GetListsQuery : IRequest<TodoList[]>
 
         public async Task<TodoList[]> Handle(GetListsQuery query, CancellationToken cancellationToken)
         {
-            var items = await _listRepository.GetAllAsync();
+            var items = await _listRepository.GetAllAsync(ownerId: query.OwnerId);
             return items;
         }
     }

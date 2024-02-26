@@ -16,9 +16,9 @@ public class TodoListController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<TodoList[]> GetAllAsync()
+    public async Task<TodoList[]> GetAllAsync([FromQuery] Guid? ownerId)
     {
-        var query = new GetListsQuery();
+        var query = new GetListsQuery(ownerId);
         return await _mediator.Send(query);
     }
 

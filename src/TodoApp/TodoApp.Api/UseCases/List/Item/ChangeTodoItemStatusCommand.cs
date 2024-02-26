@@ -6,14 +6,14 @@ namespace TodoApp.Api.UseCases.List.Item;
 
 public class ChangeTodoItemStatusCommand : IRequest
 {
-    public ChangeTodoItemStatusCommand(Guid id, Guid parentId)
+    public ChangeTodoItemStatusCommand(Guid id, Guid listId)
     {
         Id = id;
-        ParentId = parentId;
+        ListId = listId;
     }
 
     public Guid Id { get; }
-    public Guid ParentId { get; }
+    public Guid ListId { get; }
 
     internal class Handler : IRequestHandler<ChangeTodoItemStatusCommand>
     {
@@ -28,7 +28,7 @@ public class ChangeTodoItemStatusCommand : IRequest
 
         public async Task<Unit> Handle(ChangeTodoItemStatusCommand command, CancellationToken cancellationToken)
         {
-            var list = await _todoListRepository.ByIdAsync(command.ParentId);
+            var list = await _todoListRepository.ByIdAsync(command.ListId);
             list.ChangeItemStatus(command.Id);
 
             await _unitOfWork.CommitAsync();

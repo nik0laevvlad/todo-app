@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { TodoItemDto, TodoListDto } from '../types';
-import { TodoList } from './index';
-import axios from 'axios';
+import { TodoItemDto, TodoListDto } from '../../types';
 import { Notify } from 'notiflix';
 import { AddItemForm } from './Forms';
-import { Dropdown } from 'react-bootstrap';
+import { TodoList } from './TodoList';
+import { http } from '../../components';
+import { ListActionsDropdown } from './ListActionsDropdown';
 
 interface Props {
   data: TodoListDto;
@@ -18,10 +18,10 @@ export function TaskListPanel(props: Props) {
   const addTodo = (item: string) => {
     const newItem = { text: item, completed: false };
     if (newItem.text.trim() !== '') {
-      axios
+      http
         .post(`api/list/${data.id}/item`, {
           text: newItem.text,
-          parentId: data.id,
+          listId: data.id,
         })
         .then(() => {
           Notify.success('Item was successfully added');
@@ -31,7 +31,7 @@ export function TaskListPanel(props: Props) {
   };
 
   const completeTask = (selectedTodo: TodoItemDto) => {
-    axios
+    http
       .put(`api/list/${data.id}/item/${selectedTodo.id}/complete`)
       .then((response) => {
         console.log(response.data);
@@ -41,7 +41,7 @@ export function TaskListPanel(props: Props) {
 
   const deleteTask = useCallback(
     (id: string) => {
-      axios.delete(`api/list/${data.id}/item/${id}`).then(() => {
+      http.delete(`api/list/${data.id}/item/${id}`).then(() => {
         Notify.success('Item was successfully deleted');
         getList();
       });
@@ -52,11 +52,11 @@ export function TaskListPanel(props: Props) {
 
   const updateTask = (selectedTodo: TodoItemDto, text: string) => {
     if (text.trim() !== '') {
-      axios
+      http
         .put(`api/list/${data.id}/item/${selectedTodo.id}`, {
           id: selectedTodo.id,
           text: text,
-          parentId: data.id,
+          listId: data.id,
         })
         .then(() => {
           Notify.success('Item was successfully updated');
@@ -66,7 +66,7 @@ export function TaskListPanel(props: Props) {
   };
 
   const getList = () => {
-    axios.get(`/api/list/${data.id}/item`).then((response) => {
+    http.get(`/api/list/${data.id}/item`).then((response) => {
       setList(response.data);
     });
   };
@@ -79,21 +79,8 @@ export function TaskListPanel(props: Props) {
   return (
     <>
       <div className="custom-container">
-        <h2>{data.name}</h2>
-        <Dropdown>
-          <Dropdown.Toggle
-            id="dropdown-basic"
-            className="delete-dropdown"
-            variant="secondary"
-          >
-            Action
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={() => deleteList(data.id)}>
-              Delete list
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <h3>{data.name}</h3>
+        <ListActionsDropdown deleteList={() => deleteList(data.id)} />
         <AddItemForm addTodo={(item) => addTodo(item)} />
         <TodoList
           completeTask={completeTask}

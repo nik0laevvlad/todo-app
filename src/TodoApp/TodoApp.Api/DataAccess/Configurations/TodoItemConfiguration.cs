@@ -12,7 +12,7 @@ public class TodoItemConfiguration : IEntityTypeConfiguration<TodoItem>
 
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Text).HasMaxLength(500);
-        builder.HasOne(x => x.List).WithMany(x => x.TodoItems).HasForeignKey(x => x.ParentId).IsRequired()
+        builder.HasOne<TodoList>().WithMany(x => x.TodoItems).HasForeignKey(x => x.ListId).IsRequired()
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

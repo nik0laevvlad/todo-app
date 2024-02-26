@@ -1,4 +1,4 @@
-import { TodoItemDto } from '../types';
+import { TodoItemDto } from '../../types';
 import { ListItem } from './ListItem';
 import React, { useState } from 'react';
 import { UpdateTaskForm } from './Forms';

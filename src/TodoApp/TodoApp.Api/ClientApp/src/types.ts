@@ -2,10 +2,15 @@ export interface TodoItemDto {
   id: string;
   text: string;
   completed: boolean;
-  parentId: string;
+  listId: string;
 }
 
 export interface TodoListDto {
   id: string;
   name: string;
+}
+
+export interface UserContextDto {
+  id?: string;
+  isAuthenticated: boolean;
 }
