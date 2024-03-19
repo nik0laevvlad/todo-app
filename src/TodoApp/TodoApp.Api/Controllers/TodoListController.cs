@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TodoApp.Api.Models;
+using TodoApp.Api.Controllers.Dto;
 using TodoApp.Api.UseCases.List;
 
 namespace TodoApp.Api.Controllers;
@@ -16,7 +16,7 @@ public class TodoListController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<TodoList[]> GetAllAsync([FromQuery] Guid? ownerId)
+    public async Task<TodoListDto[]> GetAllAsync([FromQuery] Guid? ownerId)
     {
         var query = new GetListsQuery(ownerId);
         return await _mediator.Send(query);

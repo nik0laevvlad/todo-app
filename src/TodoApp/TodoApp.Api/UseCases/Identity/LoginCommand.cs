@@ -44,7 +44,13 @@ public class LoginCommand : IRequest<string>
             }
 
             var generatedToken = _tokenService.BuildToken(_configuration["JwtAuth:Key"],
-                _configuration["JwtAuth:Issuer"], validUser);
+                _configuration["JwtAuth:Issuer"], _configuration["JwtAuth:Audience"], validUser);
+
+            if (!_tokenService.IsTokenValid(_configuration["JwtAuth:Key"], _configuration["JwtAuth:Issuer"],
+                    _configuration["JwtAuth:Audience"], generatedToken))
+            {
+                throw new Exception("Access denied");
+            }
 
             return generatedToken;
         }

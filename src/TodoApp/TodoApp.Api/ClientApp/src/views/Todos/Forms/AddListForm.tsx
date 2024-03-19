@@ -1,15 +1,13 @@
 import { Button, Form, FormControl } from 'react-bootstrap';
-import React, { useContext, useState } from 'react';
-import { AuthContext } from '../../../components';
+import React, { useState } from 'react';
 
 interface Props {
-  onSubmit: (name: string, ownerId?: string) => void;
+  onSubmit: (name: string) => void;
 }
 
 export const AddListForm = (props: Props) => {
   const { onSubmit } = props;
   const [name, setName] = useState('');
-  const context = useContext(AuthContext);
 
   return (
     <>
@@ -17,7 +15,7 @@ export const AddListForm = (props: Props) => {
         className="input"
         onSubmit={(e) => {
           e.preventDefault();
-          onSubmit(name, context.id);
+          onSubmit(name);
           setName('');
         }}
       >

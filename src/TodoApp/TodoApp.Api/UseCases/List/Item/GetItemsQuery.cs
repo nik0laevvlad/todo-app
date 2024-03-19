@@ -1,12 +1,12 @@
 ﻿using MediatR;
+using TodoApp.Api.Controllers.Dto;
 using TodoApp.Api.DataAccess.Repositories;
-using TodoApp.Api.Models;
 
 namespace TodoApp.Api.UseCases.List.Item;
 
-public record GetItemsQuery(Guid ListId) : IRequest<TodoItem[]>
+public record GetItemsQuery(Guid ListId) : IRequest<TodoItemDto[]>
 {
-    internal class Handler : IRequestHandler<GetItemsQuery, TodoItem[]>
+    internal class Handler : IRequestHandler<GetItemsQuery, TodoItemDto[]>
     {
         private readonly ITodoListRepository _todoListRepository;
 
@@ -15,10 +15,10 @@ public record GetItemsQuery(Guid ListId) : IRequest<TodoItem[]>
             _todoListRepository = todoListRepository;
         }
 
-        public async Task<TodoItem[]> Handle(GetItemsQuery query, CancellationToken cancellationToken)
+        public async Task<TodoItemDto[]> Handle(GetItemsQuery query, CancellationToken cancellationToken)
         {
             var items = await _todoListRepository.GetAllItemsAsync(query.ListId);
-            return items;
+            return items.Select(x => new TodoItemDto(x)).ToArray();
         }
     }
 }

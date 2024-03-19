@@ -51,7 +51,9 @@ public class Startup
         services.AddMediatR(typeof(Program));
         services.AddTransient<ITokenService, TokenService>();
         services.AddScoped<IUnitOfWork, UnitOfWorkAdapter>();
-        services.AddSingleton<IAuthPort, AuthAdapter>();
+        services
+            .AddSingleton<IAuthPort, AuthAdapter>()
+            .AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         services
             .AddScoped<ITodoListRepository, TodoListRepositoryAdapter>()
             .AddScoped<IUserRepository, UserRepositoryAdapter>();

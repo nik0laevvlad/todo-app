@@ -10,7 +10,7 @@ public class TokenService : ITokenService
 {
     private const double EXPIRY_DURATION_HOURS = 3;
 
-    public string BuildToken(string key, string issuer, UserEntity user)
+    public string BuildToken(string key, string issuer, string audience, UserEntity user)
     {
         var claims = new[] {
             new Claim(ClaimTypes.Name, user.Email),
@@ -20,12 +20,12 @@ public class TokenService : ITokenService
 
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-        var tokenDescriptor = new JwtSecurityToken(issuer, issuer, claims,
+        var tokenDescriptor = new JwtSecurityToken(issuer, audience, claims,
             expires: DateTime.Now.AddHours(EXPIRY_DURATION_HOURS), signingCredentials: credentials);
         return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
     }
 
-    public bool IsTokenValid(string key, string issuer, string token)
+    public bool IsTokenValid(string key, string issuer, string audience, string token)
     {
         var mySecret = Encoding.UTF8.GetBytes(key);
         var mySecurityKey = new SymmetricSecurityKey(mySecret);
@@ -39,7 +39,7 @@ public class TokenService : ITokenService
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidIssuer = issuer,
-                    ValidAudience = issuer,
+                    ValidAudience = audience,
                     IssuerSigningKey = mySecurityKey,
                 }, out SecurityToken validatedToken);
         }

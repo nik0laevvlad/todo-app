@@ -17,12 +17,12 @@ export const TodoLists = () => {
     });
   };
 
-  const addList = (name: string, ownerId?: string) => {
+  const addList = (name: string) => {
     if (name.trim() !== '') {
       http
         .post('api/list', {
           name: name,
-          ownerId: ownerId,
+          ownerId: context.id,
         })
         .then(() => {
           Notify.success('List was successfully added');
