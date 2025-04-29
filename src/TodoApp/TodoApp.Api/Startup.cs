@@ -22,6 +22,14 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services
+            .AddCors(options =>
+            {
+                options.AddPolicy("AllowReactApp",
+                    builder => builder
+                        .WithOrigins("http://localhost:3000") // Разрешаем доступ с фронтенда на порту 3000
+                        .AllowAnyMethod() // Разрешаем все методы (GET, POST и т. д.)
+                        .AllowAnyHeader()); // Разрешаем все заголовки
+            })
             .AddControllers()
             .AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
             .Services
@@ -77,14 +85,14 @@ public class Startup
         }
 
         app
+            .UseCors("AllowReactApp")
             .UseHealthChecks("/health")
             .UseRouting()
             .UseAuthentication()
             .UseAuthorization()
             .UseEndpoints(endpoints =>
             {
-                endpoints
-                    .MapControllers();
+                endpoints.MapControllers();
             });
     }
 }

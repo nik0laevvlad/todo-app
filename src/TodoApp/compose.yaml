@@ -1,0 +1,41 @@
+﻿services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password123@
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    expose:
+      - 1433
+    volumes:
+      - ./API/App_Data:/var/opt/mssql/backup
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Password123@ -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      retries: 10
+      start_period: 60s
+      timeout: 15s
+
+  backend-dotnetapi:
+    build:
+      context: .
+      dockerfile: TodoApp.Api/Dockerfile
+    depends_on:
+      - sqlserver
+    ports:
+      - "5028:5028"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5028
+      - ConnectionStrings__DefaultConnection=${ConnectionStrings__DefaultConnection}
+
+  frontend-react:
+    build:
+      context: ./TodoApp.Api/ClientApp
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend-dotnetapi
